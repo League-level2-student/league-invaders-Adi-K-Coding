@@ -5,7 +5,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.image.BufferedImage;
 
+import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
@@ -31,12 +33,20 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	Timer frameDraw;
 	Rocketship rocketShip = new Rocketship(250, 700, 50, 50);
 	ObjectManager objectManager = new ObjectManager(rocketShip);
-
+	public static BufferedImage image;
+	public static boolean needImage = true;
+	public static boolean gotImage = false;	
+	Timer alienSpawn;
+	
 	GamePanel() {
 		titleFont = new Font("Arial", Font.PLAIN, 48);
 		otherMenuFont = new Font("Arial", Font.PLAIN, 15);
 		frameDraw = new Timer(1000 / 60, this);
 		frameDraw.start();
+		if (needImage) {
+		    loadImage ("space.png");
+		}
+
 	}
 
 	void updateMenuState() {
@@ -63,8 +73,12 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	}
 
 	void drawGameState(Graphics g) {
+		if (gotImage) {
+			g.drawImage(image, 0, 0, LeagueInvaders.WIDTH, LeagueInvaders.HEIGHT, null);
+		} else {
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, LeagueInvaders.WIDTH, LeagueInvaders.HEIGHT);
+		}
 		objectManager.draw(g);
 	}
 
@@ -80,6 +94,17 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		g.drawString("Press ENTER to restart", 170, 600);
 	}
 
+	void loadImage(String imageFile) {
+	    if (needImage) {
+	        try {
+	            image = ImageIO.read(this.getClass().getResourceAsStream(imageFile));
+		    gotImage = true;
+	        } catch (Exception e) {
+	            
+	        }
+	        needImage = false;
+	    }
+	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (currentState == MENU) {
@@ -103,7 +128,13 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 			if (currentState == END) {
 				currentState = MENU;
-			} else {
+			}else if(currentState==MENU){
+				currentState++;
+				startGame();
+			}else if(currentState==GAME) {
+				alienSpawn.stop();
+			}
+			else {
 				currentState++;
 			}
 		}
@@ -129,7 +160,10 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 			}
 		}
 	}
-
+void startGame(){
+	alienSpawn= new Timer(1000, objectManager);
+	alienSpawn.start();
+}
 	@Override
 	public void keyReleased(KeyEvent e) {
 

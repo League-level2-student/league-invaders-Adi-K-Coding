@@ -1,8 +1,10 @@
 import java.awt.Graphics;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class ObjectManager {
+public class ObjectManager implements ActionListener{
 	Rocketship rocket;
 	ArrayList<Projectile> projectiles = new ArrayList<Projectile>();
 	ArrayList<Alien> aliens = new ArrayList<Alien>();
@@ -16,7 +18,7 @@ public class ObjectManager {
 		projectiles.add(new Projectile(0, 0, 0, 0));
 	}
 
-	void addAlien(Alien a) {
+	void addAlien() {
 		aliens.add(new Alien(random.nextInt(LeagueInvaders.WIDTH), 0, 50, 50));
 	}
 
@@ -54,5 +56,11 @@ public class ObjectManager {
 		for (int j = 0; j < projectiles.size(); j++) {
 			projectiles.remove(j);
 		}
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+	
+		addAlien();
 	}
 }
