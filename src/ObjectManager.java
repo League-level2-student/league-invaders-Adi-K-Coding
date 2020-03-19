@@ -9,8 +9,9 @@ public class ObjectManager implements ActionListener {
 	ArrayList<Projectile> projectiles = new ArrayList<Projectile>();
 	ArrayList<Alien> aliens = new ArrayList<Alien>();
 	Random random = new Random();
-
-	ObjectManager(Rocketship rocketShip) {
+private int score=0;
+	
+ObjectManager(Rocketship rocketShip) {
 		rocket = rocketShip;
 	}
 
@@ -25,19 +26,14 @@ public class ObjectManager implements ActionListener {
 	void update() {
 		for (int i = 0; i < aliens.size(); i++) {
 			aliens.get(i).update();
-			if (aliens.get(i).y > LeagueInvaders.HEIGHT) {
-				aliens.get(i).isActive = false;
-			}
 		}
 		for (int j = 0; j < projectiles.size(); j++) {
 			projectiles.get(j).update();
-			if (projectiles.get(j).y < 0) {
-				projectiles.get(j).isActive = false;
-			}
 		}
 	checkCollisions();
 	purgeObjects();
-	}
+rocket.update();
+}
 
 	void draw(Graphics g) {
 		rocket.draw(g);
@@ -61,18 +57,22 @@ public class ObjectManager implements ActionListener {
 			}
 		}
 	}
-
+public int getScore() {
+	return score;
+}
 	void checkCollisions() {
 		for (int i = 0; i < aliens.size(); i++) {
 			for (int j = 0; j < projectiles.size(); j++) {
 				if (aliens.get(i).collisionBox.intersects(projectiles.get(j).collisionBox)) {
 					aliens.get(i).isActive = false;
-					projectiles.get(i).isActive = false;
+					projectiles.get(j).isActive = false;
+				score=score+1;
 				}
 			}
 			if (aliens.get(i).collisionBox.intersects(rocket.collisionBox)) {
 				aliens.get(i).isActive = false;
 				rocket.isActive = false;
+			System.out.println("FALSE");
 			}
 		}
 	}

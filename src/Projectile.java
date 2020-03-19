@@ -30,8 +30,11 @@ public class Projectile extends GameObject {
 	}
 
 	void update() {
+		super.update();
 		y = y - speed;
-	super.update();
+		if(y < 0) {
+			this.isActive= false;
+		}
 	}
 
 	void draw(Graphics g) {

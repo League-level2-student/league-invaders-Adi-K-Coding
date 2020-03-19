@@ -31,8 +31,11 @@ public class Alien extends GameObject {
 	}
 
 	void update() {
+		super.update();
 		y = y + speed;
-	super.update();
+		if(y > LeagueInvaders.HEIGHT) {
+			this.isActive = false;
+		}
 	}
 
 	void draw(Graphics g) {
