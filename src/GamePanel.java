@@ -163,7 +163,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 				}
 			}
 			if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-				if (rocketShip.x < LeagueInvaders.WIDTH - rocketShip.width)
+				if (rocketShip.x < LeagueInvaders.WIDTH+25- rocketShip.width)
 					rocketShip.right();
 			}
 			if (e.getKeyCode() == KeyEvent.VK_SPACE) {
