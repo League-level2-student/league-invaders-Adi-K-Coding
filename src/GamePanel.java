@@ -97,7 +97,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		g.setColor(Color.BLACK);
 		g.drawString("GAME OVER", 100, 125);
 		g.setFont(otherMenuFont);
-		g.drawString("You killed "+objectManager.getScore()+" enimenimies", 165, 400);
+		g.drawString("You killed "+objectManager.getScore()+" enimies", 165, 400);
 		g.drawString("Press ENTER to restart", 170, 600);
 	}
 

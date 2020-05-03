@@ -7,18 +7,18 @@ public class GameObject {
 	int height;
 	int speed = 0;
 	Boolean isActive = true;
-Rectangle collisionBox;
+	Rectangle collisionBox;
+
 	GameObject(int x, int y, int width, int height) {
- this.x=x;
- this.y=y;
- this.width=width;
- this.height=height;
-collisionBox=new Rectangle(x,y,width, height);
+		this.x = x;
+		this.y = y;
+		this.width = width;
+		this.height = height;
+		collisionBox = new Rectangle(x, y, width, height);
 	}
 
 	void update() {
-collisionBox.setBounds(x, y, width, height);
-		
-		
+		collisionBox.setBounds(x, y, width, height);
+
 	}
 }
